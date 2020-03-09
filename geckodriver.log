@@ -1,0 +1,24 @@
+1583734496326	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileHKQWCC"
+
+(firefox:8242): Gtk-WARNING **: 07:14:56.344: Locale not supported by C library.
+	Using the fallback 'C' locale.
+1583734496544	addons.webextension.doh-rollout@mozilla.org	WARN	Loading extension 'doh-rollout@mozilla.org': Reading manifest: Invalid extension permission: networkStatus
+1583734496749	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1583734496749	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1583734496749	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1583734496749	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+
+(firefox:8242): GLib-GIO-WARNING **: 07:14:56.852: /etc/xdg/kde-mimeapps.list contains a [Added Associations] group, but it is not permitted here.  Only the non-desktop-specific mimeapps.list file may add or remove associations.
+
+(/usr/lib/firefox/firefox:8355): Gtk-WARNING **: 07:14:57.115: Locale not supported by C library.
+	Using the fallback 'C' locale.
+
+(/usr/lib/firefox/firefox:8378): Gtk-WARNING **: 07:14:57.218: Locale not supported by C library.
+	Using the fallback 'C' locale.
+1583734497850	Marionette	INFO	Listening on port 45357
+1583734497931	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/usr/lib/firefox/firefox:8459): Gtk-WARNING **: 07:14:58.169: Locale not supported by C library.
+	Using the fallback 'C' locale.
+JavaScript error: , line 0: NotAllowedError: The play method is not allowed by the user agent or the platform in the current context, possibly because the user denied permission.
+1583734519310	Marionette	INFO	Stopped listening on port 45357

@@ -19,7 +19,9 @@ print("Please go here and authorize" + " "+ authorization_url)
 
 webbrowser.open(authorization_url)
  
-user_auth = input("Please insert the WHOLE URL after you logged in.")
+user_auth = input("Please insert the WHOLE URL after you logged in: " )
+
+print(user_auth)
 
 
 
