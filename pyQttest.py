@@ -10,6 +10,7 @@ from auth_url import auth_request_url
     pass"""
     
 
+
 class WebPage(QWebPage):
     def userAgentForUrl(self, url):
         return "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
@@ -41,31 +42,41 @@ class Authorize(QWebView):
             value = e.queryItemValue("code")
             print(value)
 
+class UI(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+    
+    def initUI(self):
+        self.resize(400,400)
+        self.setWindowTitle("Auth")
+       
+        self.login_b = QPushButton(self)
+        self.login_b.setText("Login through here")
+        self.login_b.move(10,10)
+        self.login_b.show()
 
+        self.code_box = QInputDialog(self)
+        #self.code_box.InputDialogOption(0x00000001)
+        self.code_box.getText(self,"lol","input")
+        self.code_box.setOptions(self.code_box.NoButtons,bool(True))
+        self.code_box.move(200,200)
+
+        
+       
+       
+       
+       
+       
+       
+        self.show()
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
 
-    w = QWidget()
-
-    w.resize(300,300)
-    w.setWindowTitle("igm")
-    w.show()
-    
+    w = UI()
     authurl = auth_request_url()
-
-
-
-
     auth = Authorize()
     auth.load(authurl)
-
-    auth_button = QPushButton(w)
-    auth_button.setText("Login through here")
-    auth_button.move(80,150)
-    auth_button.show()
-    auth_button.clicked.connect(auth.user_auth)
-        
-        
-
+    w.login_b.clicked.connect(auth.user_auth)
     sys.exit(app.exec_())
