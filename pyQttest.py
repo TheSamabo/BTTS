@@ -4,8 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWebKit import *
 from PyQt5.QtNetwork import *
-from auth_url import auth_request_url
-from api_request import api_twitch
+from auth_url import auth
 
 
 
@@ -13,11 +12,11 @@ class WebPage(QWebPage):
     def userAgentForUrl(self, url):
         return "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
 class Authorize(QWebView):
-
+    auth_code = ""
     def __init__(self):
         
         self.view = QWebView.__init__(self)
-        self.setWindowTitle("Auth")
+        self.setWindowTitle("Authorization")
         self.resize(600,600)
         self.setPage(WebPage())
         self.s1 = QScrollBar()
@@ -31,17 +30,28 @@ class Authorize(QWebView):
     def user_auth(self, url):
         self.showNormal()
         print("imworking")
+        auth.load(authurl)
         self.urlChanged.connect(self.get_code)
-        
-# NEEDS MORE TESTING / DEBUGING
+
+    def get_token():
+        token = auth.auth_request_code()
+        return token
+
+
     def get_code(self, url):
         if authurl != url:
             e = QUrlQuery(url)
             value = e.queryItemValue("code")
-            print(value)
+            print("Code: " +value)
+            print(url)
+
+            # RECEIVE auth_code as value, need to send it to auth_url.py 
+
             if value:
+                auth_code = value
                 w.insertCode(value)
                 self.close()
+                
 class UI(QWidget):
     def __init__(self):
         super().__init__()
@@ -49,7 +59,7 @@ class UI(QWidget):
     
     def initUI(self):
         self.resize(400,400)
-        self.setWindowTitle("Auth")
+        self.setWindowTitle("ChPTTS")
        
         self.login_b = QPushButton(self)
         self.login_b.setText("Login through here")
@@ -82,10 +92,9 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     w = UI()
-    authurl = auth_request_url()
+    authurl = auth.auth_request_url()
     auth = Authorize()
-    auth.load(authurl)
+    
     w.login_b.clicked.connect(auth.user_auth)
-    w.insertCode("vqjdl79t7quilebbfr7qhzr70o9lpz")
     sys.exit(app.exec_())
   
