@@ -1,19 +1,18 @@
 import requests
 from requests_oauthlib import OAuth2Session
+import json
 
 
 client_id = "gqozun4l4eg9dk43yb1wjdpch0z4jk"
-client_secret = "ykqv7h9a9rnusijzs1c6ovdib05ykj"
+client_secret = "gqkg0pf9vonqdezw071og9emi6l459"
 authorization_base_url = "https://id.twitch.tv/oauth2/authorize"
-token_url = "https://id.twitch.tv/oauth2/token"
 redirect_uri = "https://duckduckgo.com"
 response_type = "code"
 scope = "channel_read"
-auth_code = ""
 
-class auth():
+class twitch_api():
 
-    def auth_request_url():
+    def request_url(self):
         
 
         twitch = OAuth2Session(client_id=client_id, redirect_uri=redirect_uri, scope=scope)
@@ -22,17 +21,48 @@ class auth():
 
         return authorization_url
 
+    def setCode(self, value):
+        self.auth_code = value
+        print(self.auth_code)
 
-    def auth_request_code():
+    def request_token(self):
 
         url = "https://id.twitch.tv/oauth2/token"
 
-        payload = "client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=authorization_code&scope=" + scope + "&code=" + auth_code + "&redirect_uri=https%3A%2F%2Fduckduckgo.com"
+        payload = "client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=authorization_code&scope=" + scope + "&code=" + self.auth_code + "&redirect_uri=https%3A%2F%2Fduckduckgo.com"
         headers = {
             'content-type': "application/x-www-form-urlencoded"}
 
         response = requests.request("POST", url, data=payload, headers=headers)
+        
+        print(payload)
 
-        print(response)
+        # ACCESS and REFRESH tokens 
 
-auth.auth_request_code()
+        self.tokens =  json.loads(response.text)
+
+    def request_channel(self):
+        
+        url = "https://api.twitch.tv/kraken/channel"
+
+        payload = ""
+        headers = {
+            'authorization': "OAuth " + self.tokens["access_token"],
+            'accept': "application/vnd.twitchtv.v5+json",
+            'client-id': "gqozun4l4eg9dk43yb1wjdpch0z4jk"
+            }
+
+        response = requests.request("GET", url, data=payload, headers=headers)
+        self.channel = json.loads(response.text)
+        
+        print(response.text)
+        print(headers)
+    
+    def getChannel(self):
+        return self.channel
+
+    def getTokens(self):
+        return self.tokens
+
+# bruh = twitch_api()
+# bruh.request_channel()
