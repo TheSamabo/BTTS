@@ -8,7 +8,7 @@ client_secret = "gqkg0pf9vonqdezw071og9emi6l459"
 authorization_base_url = "https://id.twitch.tv/oauth2/authorize"
 redirect_uri = "https://duckduckgo.com"
 response_type = "code"
-scope = "channel_read"
+scope = "channel_read channel:read:redemptions"
 
 class twitch_api():
 
@@ -20,13 +20,10 @@ class twitch_api():
         authorization_url, state = twitch.authorization_url(authorization_base_url)
 
         return authorization_url
-
     def setCode(self, value):
         self.auth_code = value
-        print(self.auth_code)
 
     def request_token(self):
-
         url = "https://id.twitch.tv/oauth2/token"
 
         payload = "client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=authorization_code&scope=" + scope + "&code=" + self.auth_code + "&redirect_uri=https%3A%2F%2Fduckduckgo.com"
@@ -34,11 +31,9 @@ class twitch_api():
             'content-type': "application/x-www-form-urlencoded"}
 
         response = requests.request("POST", url, data=payload, headers=headers)
-        
-        print(payload)
 
         # ACCESS and REFRESH tokens 
-
+        print(response.text)
         self.tokens =  json.loads(response.text)
 
     def request_channel(self):
@@ -49,14 +44,13 @@ class twitch_api():
         headers = {
             'authorization': "OAuth " + self.tokens["access_token"],
             'accept': "application/vnd.twitchtv.v5+json",
-            'client-id': "gqozun4l4eg9dk43yb1wjdpch0z4jk"
+            'client-id': + " " + client_id
             }
 
         response = requests.request("GET", url, data=payload, headers=headers)
         self.channel = json.loads(response.text)
         
         print(response.text)
-        print(headers)
     
     def getChannel(self):
         return self.channel
@@ -64,5 +58,3 @@ class twitch_api():
     def getTokens(self):
         return self.tokens
 
-# bruh = twitch_api()
-# bruh.request_channel()

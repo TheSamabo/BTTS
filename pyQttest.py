@@ -17,6 +17,9 @@ class WebPage(QWebPage):
     def userAgentForUrl(self, url):
         return "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
 
+
+            # RECEIVE auth_code as value, need to send it to auth_url
+
 class Authorize(QWebView):
     auth_code = ""
     def __init__(self):
@@ -37,7 +40,7 @@ class Authorize(QWebView):
     def user_auth(self, url):
 
         self.showNormal()
-        print("imworking")
+
         auth.load(authurl)
         self.urlChanged.connect(self.get_code)
         
@@ -48,15 +51,14 @@ class Authorize(QWebView):
 
 
     def get_code(self, url):
-
-        # Check if the url changed 
-        if authurl != url:
-            e = QUrlQuery(url)
+        e = QUrlQuery(url)
 
             # Grab the "Code" field from the redirectUrl
-            self.value = e.queryItemValue("code")
+        self.value = e.queryItemValue("code")
+        # Check if the url changed 
+        if self.value:
+            
             print("Code: " + self.value)
-            print(url)
 
             # RECEIVE auth_code as value, need to send it to auth_url.py 
 
@@ -87,7 +89,7 @@ class UI(QWidget):
     def initUI(self):
         self.resize(400,400)
         self.setWindowTitle("ChPTTS")
-       
+        await
         self.login_b = QPushButton(self)
         self.login_b.setText("Login through here")
         self.login_b.move(10,10)
