@@ -44,7 +44,7 @@ class twitch_api():
         headers = {
             'authorization': "OAuth " + self.tokens["access_token"],
             'accept': "application/vnd.twitchtv.v5+json",
-            'client-id': + " " + client_id
+            'client-id': "gqozun4l4eg9dk43yb1wjdpch0z4jk"
             }
 
         response = requests.request("GET", url, data=payload, headers=headers)

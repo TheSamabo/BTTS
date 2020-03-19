@@ -89,7 +89,7 @@ class UI(QWidget):
     def initUI(self):
         self.resize(400,400)
         self.setWindowTitle("ChPTTS")
-        await
+
         self.login_b = QPushButton(self)
         self.login_b.setText("Login through here")
         self.login_b.move(10,10)
