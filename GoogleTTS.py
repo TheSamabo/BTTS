@@ -26,6 +26,6 @@ def tts(tts_text):
     with open('output.mp3', 'wb') as out:
         # Write the response to the output file.
         out.write(response.audio_content)
-        print('Audio content written to file "output.mp3"')
+        print('New message as "output.mp3"')
 
     playsound('./output.mp3')

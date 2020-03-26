@@ -10,9 +10,9 @@ from auth_url import twitch_api
 # Need to figure out how to disable/hide the horizontal scroll bar
 class WebPage(QWebPage):
 
-    def mainFrame(QWebFrame):
-        #frame = QWebFrame(self)
-        frame.setScrollBarPolicy(Qt.Horizontal , Qt.ScrollBarAlwaysOff)
+    def mainFrame(self, QWebFrame):
+        frame = QWebFrame(self)
+        frame.setScrollBarPolicy(Horizontal , Qt.ScrollBarAlwaysOff)
  
     def userAgentForUrl(self, url):
         return "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"

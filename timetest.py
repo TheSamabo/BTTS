@@ -14,9 +14,9 @@ while(True):
         lig = str(now_min)[0]
 
 
-    if lig == "3" or lig == "6" or lig == "9":
+    if lig == "2" or lig == "4" or lig == "6" or lig == "8":
         if str(now_sec) == "1":
-            #code
+            print("bullshit")
 
 # while(True):
 #     print(now_sec)
