@@ -5,21 +5,22 @@ import time
 from GoogleTTS import tts
 
 isGettingMessage = True
-access_token = "3chzarzuypzcfnabl1o4hnkqwkm9bj"
+access_token = "j9gmn6e9l29c9swrfc9sw1qbewcs84"
 channel_id = "66504977"
 
 url = "wss://pubsub-edge.twitch.tv"
 loop = asyncio.get_event_loop()
 
 async def open_and_keep():
+    while(True):
+        async with websockets.connect(url) as socket:
+            ping = json.dumps({
+                "type": "PING" })
 
-    async with websockets.connect(url) as socket:
-        ping = json.dumps({
-            "type": "PING" })
-
-        await socket.send(ping)
-        res = await socket.recv()
-        print(res)
+            await socket.send(ping)
+            res = await socket.recv()
+            print(res)
+            await asyncio.sleep(120)
     
 
     
@@ -54,10 +55,8 @@ async def listen():
 
             # os.system('espeak ' tts)
             #await os.system("espeak " + text_ts["data"]["message"]["data"]["redemption"]["user_input"])       
-async def ping():
-    await open_and_keep()    
     
-loop.run_until_complete(open_and_keep())
+loop.create_task(open_and_keep())
 
 loop.run_until_complete(listen())
 
