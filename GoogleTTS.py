@@ -3,7 +3,7 @@ from playsound import playsound
 
 def tts(tts_text):
     # Instantiates a client
-    client = texttospeech.TextToSpeechClient.from_service_account_json("/home/mabo/Work/KendryAlert/GoogleCreds.json")
+    client = texttospeech.TextToSpeechClient.from_service_account_json("./GoogleCreds.json")
 
     # Set the text input to be synthesized
     synthesis_input = texttospeech.types.SynthesisInput(text = tts_text)

@@ -25,7 +25,7 @@ class Authorize(QWebView):
     def __init__(self):
         
         # Creating the TwitchLoginWindow
-        self.view = QWebView.__init__(self)
+        self.view = QWebView.__init__(self)    
         self.setWindowTitle("Authorization")
         self.resize(500,600)
         self.setPage(WebPage())
