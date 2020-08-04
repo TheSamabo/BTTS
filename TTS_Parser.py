@@ -7,23 +7,24 @@ from GoogleTTS import tts
 from auth_url import twitch_api
 import random
 
-isGettingMessage = True
-access_token = "1dhvfowch8p6yjbeebqxqqr2mit2xf"
-channel_id = "66504977"
-
-url = "wss://pubsub-edge.twitch.tv"
 
 class TTV_Websocket():
     def __init__(self):
-        pass
+
+        self.connection = None
+
+        self.channel_id = None
+        self.access_token = None
+        self.isOpened = False
+
     async def connect(self):
-        self.conn = await websockets.client.connect(url)
+        self.conn = await websockets.client.connect("wss://pubsub-edge.twitch.tv")
         print(self.conn)
         if self.conn.open:
             data = json.dumps({
                         "type":"LISTEN",
                         "data": {
-                            "topics": ["channel-points-channel-v1." + channel_id],
+                            "topics": ["channel-points-channel-v1." + self.channel_id],
                             "auth_token": access_token
                         }
                     })
@@ -58,8 +59,10 @@ class TTV_Websocket():
                     elif dict_msg["type"] == "MESSAGE":
                         placeholder = json.loads(dict_msg["data"]["message"])
                         core_msg = placeholder["data"]["redemption"]["user_input"]
-                        print("TTS TEXT: " + core_msg)
-                        tts(core_msg)
+                        userFrom_msg = placeholder["data"]["redemption"]["user"]["display_name"]
+                        print(dict_msg)
+                        say_text = "%s says %s" % (userFrom_msg,core_msg)
+                        tts(say_text)
                         
                     else:
                         print(dict_msg)
@@ -67,14 +70,14 @@ class TTV_Websocket():
                 except Exception as e:
                     print(e)
                     loop.stop()
-
-if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    q = TTV_Websocket()
-    connection = loop.run_until_complete(q.connect())
-    tasks = [ 
-            asyncio.ensure_future(q.open_and_keep(connection)),
-            asyncio.ensure_future(q.listen(connection))
-        ]
-            
-    loop.run_until_complete(asyncio.wait(tasks))
+    def Start(self):
+       
+        loop = asyncio.get_event_loop()
+        
+        self.connection = loop.run_until_complete(self.connect())
+        tasks = [ 
+                asyncio.ensure_future(self.open_and_keep(self.connection)),
+                asyncio.ensure_future(self.listen(self.connection))
+            ]
+                
+        loop.run_until_complete(asyncio.wait(tasks))
