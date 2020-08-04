@@ -29,6 +29,7 @@ class Authorize(QWebView):
         self.setWindowTitle("Authorization")
         self.resize(500,600)
         self.setPage(WebPage())
+        self.tokens = None
 
 
        
@@ -38,11 +39,11 @@ class Authorize(QWebView):
 
     # Method that is called after  clicking "Login through here"
     def user_auth(self, url):
+        if not self.tokens:
+            self.showNormal()
 
-        self.showNormal()
-
-        auth.load(authurl)
-        self.urlChanged.connect(self.get_code)
+            auth.load(authurl)
+            self.urlChanged.connect(self.get_code)
         
 
     def get_token(self):
@@ -58,28 +59,26 @@ class Authorize(QWebView):
         # Check if the url changed 
         if self.value:
             
-            print("Code: " + self.value)
 
             # RECEIVE auth_code as value, need to send it to auth_url.py 
 
-            if self.value:
+            # Sending "code" to auth_url.p
+            Api.setCode(self.value)
+            Api.request_token()
+            Api.request_channel()
 
-                # Sending "code" to auth_url.p
-                Api.setCode(self.value)
-                Api.request_token()
-                Api.request_channel()
+            # Create vars in Object for later use
+            self.channel = Api.getChannel()
+            self.tokens = Api.getTokens()
+            
+            # Asign the access_token and code to the UI Lines 
+            w.code_box.setText(self.value)
+            w.Atoken_LE.setText(self.tokens["access_token"])
 
-                # Create vars in Object for later use
-                self.channel = Api.getChannel()
-                self.tokens = Api.getTokens()
-                
-                # Asign the access_token and code to the UI Lines 
-                w.code_box.setText(self.value)
-                w.Atoken_LE.setText(self.tokens["access_token"])
+            # Close the login window after authentication
+            self.close()
 
-                # Close the login window after authentication
-                self.close()
-
+            print("Code: " + self.value)
 # Main UI window
 class UI(QWidget):
     def __init__(self):

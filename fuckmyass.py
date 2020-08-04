@@ -2,75 +2,75 @@ import websockets
 import asyncio
 import json
 import time
+from datetime import datetime
 from GoogleTTS import tts
 from auth_url import twitch_api
 import random
 
 isGettingMessage = True
-access_token = "dteso81hxqizbjnl6587ubomnptjxt"
+access_token = "n9eszb4g3ms09xd5l2s3ihhs8ch865"
 channel_id = "66504977"
 
 url = "wss://pubsub-edge.twitch.tv"
-loop = asyncio.get_event_loop()
 
-async def open_and_keep():
-    while(True):
-        async with websockets.connect(url) as socket:
-            ping = json.dumps({
-                "type": "PING" })
+class TTV_Websocket():
+    def __init__(self):
+        pass
+    async def connect(self):
+        self.conn = await websockets.client.connect(url)
+        print(self.conn)
+        if self.conn.open:
+            data = json.dumps({
+                        "type":"LISTEN",
+                        "data": {
+                            "topics": ["channel-points-channel-v1." + channel_id],
+                            "auth_token": access_token
+                        }
+                    })
+            await self.sendMessage(data)
+            return self.conn
 
-            await socket.send(ping)
-            res = await socket.recv()
-            print(res)
-            await asyncio.sleep(100 + random.randrange(1,50))
-    
-
-    
+    async def open_and_keep(self, conn):
+        while(True):
+                ping = json.dumps({
+                    "type": "PING" })
 
 
-async def listen():    
-    async with websockets.connect(url) as socket:
-        data = json.dumps({
-                    "type":"LISTEN",
-                    "data": {
-                        "topics": ["channel-points-channel-v1." + channel_id],
-                        "auth_token": access_token
-                    }
-                })
-        await socket.send(data)
+                await self.sendMessage(ping)
+                await asyncio.sleep(100 + random.randrange(1,50))
         
-        resp = await socket.recv()
+    async def sendMessage(self, message):
+        await self.conn.send(message)
 
-        dec_resp = json.loads(resp)
 
-        if dec_resp["error"]:
-
-            api = twitch_api()
-            api.request_token()
-            tokens = api.getTokens()
-
-        print(dec_resp)
-       
-        while(loop.is_running):
+    async def listen(self, socket):    
             
-            msg = await socket.recv()
-            #startingPoint = text_ts.find("status")
-            dec_msg = json.loads(json.loads(msg[81:len(msg) - 4]))
-            tts_msg = dec_msg["data"]["redemption"]["user_input"]
-            tts_user = dec_msg["data"]["redemption"]["user"]["display_name"]
-            tts_text = tts_user + " says, " + tts_msg[:250]
-            print( tts_user + "'s input: " + tts_msg)
-
-            tts(tts_text)
             
+            while(True):
+                msg = await socket.recv()
 
-            # os.system('espeak ' tts)
-            #await os.system("espeak " + text_ts["data"]["message"]["data"]["redemption"]["user_input"])       
-    
-loop.create_task(open_and_keep())
+                print(datetime.now(), end=" ")
+                dict_msg = json.loads(msg)
+                if dict_msg["type"] == "MESSAGE":
+                    placeholder = json.loads(dict_msg["data"]["message"])
+                    core_msg = placeholder["data"]["redemption"]["user_input"]
+                    tts(core_msg)
+                    
+                    print(core_msg)
+                elif dict_msg["error"]:
+                    print("Error: "  + dict_msg["error"])
+                    loop.stop()
+                    break
+                else:
+                    print(msg)
 
-loop.run_until_complete(listen())
-
-# loop.run_until_complete(test())
-
- 
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    q = TTV_Websocket()
+    connection = loop.run_until_complete(q.connect())
+    tasks = [ 
+            asyncio.ensure_future(q.open_and_keep(connection)),
+            asyncio.ensure_future(q.listen(connection))
+        ]
+            
+    loop.run_until_complete(asyncio.wait(tasks))

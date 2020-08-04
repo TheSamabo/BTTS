@@ -2,7 +2,7 @@ from google.cloud import texttospeech
 from playsound import playsound
 
 def tts(tts_text):
-    # Instantiates a client
+    # Instantiates a client and loads file with credentials
     client = texttospeech.TextToSpeechClient.from_service_account_json("./GoogleCreds.json")
 
     # Set the text input to be synthesized

@@ -20,6 +20,8 @@ class twitch_api():
         authorization_url, state = twitch.authorization_url(authorization_base_url)
 
         return authorization_url
+
+
     def setCode(self, value):
         self.auth_code = value
 
@@ -50,7 +52,6 @@ class twitch_api():
         response = requests.request("GET", url, data=payload, headers=headers)
         self.channel = json.loads(response.text)
         
-        print(response.text)
     
     def getChannel(self):
         return self.channel
