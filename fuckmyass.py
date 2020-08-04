@@ -8,7 +8,7 @@ from auth_url import twitch_api
 import random
 
 isGettingMessage = True
-access_token = "n9eszb4g3ms09xd5l2s3ihhs8ch865"
+access_token = "1dhvfowch8p6yjbeebqxqqr2mit2xf"
 channel_id = "66504977"
 
 url = "wss://pubsub-edge.twitch.tv"
@@ -48,21 +48,25 @@ class TTV_Websocket():
             
             while(True):
                 msg = await socket.recv()
-
                 print(datetime.now(), end=" ")
                 dict_msg = json.loads(msg)
-                if dict_msg["type"] == "MESSAGE":
-                    placeholder = json.loads(dict_msg["data"]["message"])
-                    core_msg = placeholder["data"]["redemption"]["user_input"]
-                    tts(core_msg)
-                    
-                    print(core_msg)
-                elif dict_msg["error"]:
-                    print("Error: "  + dict_msg["error"])
+                try:
+
+                    if dict_msg["type"] == "RESPONSE" and dict_msg["error"]:
+                        
+                        raise dict_msg["error"]
+                    elif dict_msg["type"] == "MESSAGE":
+                        placeholder = json.loads(dict_msg["data"]["message"])
+                        core_msg = placeholder["data"]["redemption"]["user_input"]
+                        print("TTS TEXT: " + core_msg)
+                        tts(core_msg)
+                        
+                    else:
+                        print(dict_msg)
+
+                except Exception as e:
+                    print(e)
                     loop.stop()
-                    break
-                else:
-                    print(msg)
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
