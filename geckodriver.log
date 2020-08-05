@@ -1,0 +1,80 @@
+1596577449126	geckodriver	INFO	Listening on 127.0.0.1:42397
+1596577665554	geckodriver	INFO	Listening on 127.0.0.1:43187
+1596577675498	geckodriver	INFO	Listening on 127.0.0.1:55151
+
+(firefox:122050): Gtk-WARNING **: 23:52:10.650: Locale not supported by C library.
+	Using the fallback 'C' locale.
+
+(/usr/lib/firefox/firefox:122232): Gtk-WARNING **: 23:52:11.429: Locale not supported by C library.
+	Using the fallback 'C' locale.
+
+(/usr/lib/firefox/firefox:122256): Gtk-WARNING **: 23:52:11.574: Locale not supported by C library.
+	Using the fallback 'C' locale.
+
+(/usr/lib/firefox/firefox:122232): Gtk-WARNING **: 23:52:11.639: Theme parsing error: gtk.css:68:35: The style property GtkButton:child-displacement-x is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122232): Gtk-WARNING **: 23:52:11.639: Theme parsing error: gtk.css:69:35: The style property GtkButton:child-displacement-y is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122232): Gtk-WARNING **: 23:52:11.640: Theme parsing error: gtk.css:71:36: The style property GtkCheckMenuItem:indicator-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122232): Gtk-WARNING **: 23:52:11.640: Theme parsing error: gtk.css:76:30: The style property GtkExpander:expander-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122256): Gtk-WARNING **: 23:52:11.781: Theme parsing error: gtk.css:68:35: The style property GtkButton:child-displacement-x is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122256): Gtk-WARNING **: 23:52:11.781: Theme parsing error: gtk.css:69:35: The style property GtkButton:child-displacement-y is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122256): Gtk-WARNING **: 23:52:11.781: Theme parsing error: gtk.css:71:36: The style property GtkCheckMenuItem:indicator-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122256): Gtk-WARNING **: 23:52:11.781: Theme parsing error: gtk.css:76:30: The style property GtkExpander:expander-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+
+(/usr/lib/firefox/firefox:122338): Gtk-WARNING **: 23:52:12.646: Locale not supported by C library.
+	Using the fallback 'C' locale.
+1596577932770	Marionette	INFO	Listening on port 42807
+1596577932836	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/usr/lib/firefox/firefox:122338): Gtk-WARNING **: 23:52:45.699: Theme parsing error: gtk.css:68:35: The style property GtkButton:child-displacement-x is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122338): Gtk-WARNING **: 23:52:45.699: Theme parsing error: gtk.css:69:35: The style property GtkButton:child-displacement-y is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122338): Gtk-WARNING **: 23:52:45.699: Theme parsing error: gtk.css:71:36: The style property GtkCheckMenuItem:indicator-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122338): Gtk-WARNING **: 23:52:45.699: Theme parsing error: gtk.css:76:30: The style property GtkExpander:expander-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:122521): Gtk-WARNING **: 23:52:45.779: Locale not supported by C library.
+	Using the fallback 'C' locale.
+1596577972125	Marionette	INFO	Stopped listening on port 42807
+
+(firefox:7972): Gtk-WARNING **: 23:01:57.365: Locale not supported by C library.
+	Using the fallback 'C' locale.
+
+(/usr/lib/firefox/firefox:8142): Gtk-WARNING **: 23:01:58.202: Locale not supported by C library.
+	Using the fallback 'C' locale.
+
+(/usr/lib/firefox/firefox:8166): Gtk-WARNING **: 23:01:58.308: Locale not supported by C library.
+	Using the fallback 'C' locale.
+
+(/usr/lib/firefox/firefox:8142): Gtk-WARNING **: 23:01:58.335: Theme parsing error: gtk.css:68:35: The style property GtkButton:child-displacement-x is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:8142): Gtk-WARNING **: 23:01:58.335: Theme parsing error: gtk.css:69:35: The style property GtkButton:child-displacement-y is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:8142): Gtk-WARNING **: 23:01:58.335: Theme parsing error: gtk.css:71:36: The style property GtkCheckMenuItem:indicator-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:8142): Gtk-WARNING **: 23:01:58.335: Theme parsing error: gtk.css:76:30: The style property GtkExpander:expander-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:8166): Gtk-WARNING **: 23:01:58.456: Theme parsing error: gtk.css:68:35: The style property GtkButton:child-displacement-x is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:8166): Gtk-WARNING **: 23:01:58.456: Theme parsing error: gtk.css:69:35: The style property GtkButton:child-displacement-y is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:8166): Gtk-WARNING **: 23:01:58.457: Theme parsing error: gtk.css:71:36: The style property GtkCheckMenuItem:indicator-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+
+(/usr/lib/firefox/firefox:8166): Gtk-WARNING **: 23:01:58.457: Theme parsing error: gtk.css:76:30: The style property GtkExpander:expander-size is deprecated and shouldn't be used anymore. It will be removed in a future version
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1596661318985	Marionette	INFO	Listening on port 46537
+1596661319046	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(/usr/lib/firefox/firefox:8249): Gtk-WARNING **: 23:01:59.204: Locale not supported by C library.
+	Using the fallback 'C' locale.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.

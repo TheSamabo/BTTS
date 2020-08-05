@@ -5,7 +5,7 @@ from PyQt5.QtWebKitWidgets import *
 from PyQt5.QtWebKit import *
 from PyQt5.QtNetwork import *
 from auth_url import twitch_api
-
+from TTS_Parser import TTV_Websocket
 
 # Need to figure out how to disable/hide the horizontal scroll bar
 class WebPage(QWebPage):
@@ -71,6 +71,7 @@ class Authorize(QWebView):
             self.channel = Api.getChannel()
             self.tokens = Api.getTokens()
             
+            print(self.channel)
             # Asign the access_token and code to the UI Lines 
             w.code_box.setText(self.value)
             w.Atoken_LE.setText(self.tokens["access_token"])
@@ -94,6 +95,12 @@ class UI(QWidget):
         self.login_b.move(10,10)
         self.login_b.show()
  
+        self.TTS = QPushButton(self)
+        self.TTS.setText("Start TTS")
+        self.TTS.move(150,250)
+        self.TTS.show()
+
+
         self.code_box = QLineEdit(self)
         self.code_box.setReadOnly(True)
         self.code_box.setPlaceholderText("Auth_code")
@@ -108,6 +115,10 @@ class UI(QWidget):
         
         self.show()
         
+def initTTS(auth):
+    ttsParser = TTV_Websocket()
+    ttsParser.access_token = auth.tokens["access_token"]
+    
 
 # APP EXEC
 if __name__ == "__main__":
@@ -119,5 +130,13 @@ if __name__ == "__main__":
     authurl = Api.request_url()
     auth = Authorize()
     w.login_b.clicked.connect(auth.user_auth)
+
+
+
+    
+
+
+
+
     sys.exit(app.exec_())
   
