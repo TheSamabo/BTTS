@@ -5,7 +5,10 @@ import time
 auth = twitch_api()
 url = auth.request_url()
 window = webview.create_window('Authorization',url=url)
+#
 
+# Rework this into class based, so you can access 
+# disableButton, codeUrl, etc.
 def Login():
 
         window.closed += on_closed
@@ -13,7 +16,8 @@ def Login():
 
         webview.start()
 
-
+        codeUrl = None
+        disableButton = False
 def on_closed():
     window.destroy()
     print(window)
@@ -25,8 +29,12 @@ def on_loaded():
         while(True):
             if isinstance(window,webview.Window):
                 browserUrl = window.get_current_url()
-                print(browserUrl)
-        
+                if "code=" in browserUrl:
+                    print(browserUrl)
+                    codeUrl = browserUrl
+                    on_closed()
+                    disableButton = True
+                    break
             time.sleep(5)
 
 
@@ -35,4 +43,6 @@ def on_loaded():
 
     except KeyError as e:
         pass
+
+def get_disableButton():
 
