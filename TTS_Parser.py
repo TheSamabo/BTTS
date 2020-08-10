@@ -4,7 +4,6 @@ import json
 import time
 from datetime import datetime
 from GoogleTTS import tts
-from auth_url import twitch_api
 import random
 
 
@@ -25,7 +24,7 @@ class TTV_Websocket():
                         "type":"LISTEN",
                         "data": {
                             "topics": ["channel-points-channel-v1." + self.channel_id],
-                            "auth_token": access_token
+                            "auth_token": self.access_token
                         }
                     })
             await self.sendMessage(data)
