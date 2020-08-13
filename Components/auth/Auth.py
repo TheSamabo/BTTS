@@ -1,6 +1,7 @@
 import requests
 from requests_oauthlib import OAuth2Session
 import json
+import configparser
 
 
 client_id = "gqozun4l4eg9dk43yb1wjdpch0z4jk"
@@ -10,6 +11,7 @@ redirect_uri = "https://duckduckgo.com"
 response_type = "code"
 scope = "channel_read channel:read:redemptions"
 
+config = configparser.ConfigParser()
 class twitch_api():
 
     def request_url(self):
@@ -34,9 +36,16 @@ class twitch_api():
 
         response = requests.request("POST", url, data=payload, headers=headers)
 
+        
+        
         # ACCESS and REFRESH tokens 
         print(response.text)
         self.tokens =  json.loads(response.text)
+        config['Tokens'] = {"AccessToken": self.tokens["access_token"],
+                            "RefreshToken": self.tokens["refresh_token"]
+                            }
+        with open('data.ini','w') as configfile:
+            config.write(configfile)
 
     def request_channel(self):
         
@@ -58,4 +67,24 @@ class twitch_api():
 
     def getTokens(self):
         return self.tokens
+
+def checkTokens():
+    config.read('data.ini')
+    rt = config["Tokens"]["RefreshToken"]
+
+    url = "https://id.twitch.tv/oauth2/token"
+
+    payload = "refresh_token=" + rt + "&client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=refresh_token&scope=" + scope 
+    headers = {
+        'content-type': "application/x-www-form-urlencoded"}
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+    return json.loads(response.text)
+    
+
+
+
+
+
+
 

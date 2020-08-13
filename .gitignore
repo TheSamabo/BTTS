@@ -1,4 +1,6 @@
 __pycache__
+test.py
+data.ini
 .output.mp3
 config
 GoogleCreds.json
