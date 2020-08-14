@@ -8,9 +8,16 @@ import random
 import logging
 from Components.auth.Auth import checkData
 
-loop = asyncio.get_event_loop()
 class TTV_Websocket():
     def __init__(self):
+
+        self.loop = asyncio.get_event_loop()
+        if not self.loop.is_running():
+
+
+            newLoop = asyncio.new_event_loop()
+            asyncio.set_event_loop(newLoop)
+            self.loop = asyncio.get_event_loop()
 
         self.logger = logging.getLogger(__name__)
         self.connection = None
@@ -34,7 +41,7 @@ class TTV_Websocket():
             
 
     async def open_and_keep(self, conn):
-        while(loop.is_running()):
+        while(self.loop.is_running()):
                 ping = json.dumps({
                     "type": "PING" })
 
@@ -51,7 +58,7 @@ class TTV_Websocket():
             
             
         try:
-            while(loop.is_running()):
+            while(self.loop.is_running()):
                 msg = await socket.recv()
                 print(datetime.now(), end=" ")
                 dict_msg = json.loads(msg)
@@ -78,19 +85,20 @@ class TTV_Websocket():
         except Exception as e:
             self.logger.exception(e)
             print(e)
-            loop.stop()
+            self.loop.close()
         
     def Stop(self):
         self.logger.warn("Closing TTS")
-        loop.close()
+        self.loop.stop()
 
     def Start(self):
-       
         
-        self.connection = loop.run_until_complete(self.connect())
+        
+        print(self.loop)
+        self.connection = self.loop.run_until_complete(self.connect())
         tasks = [ 
                 asyncio.ensure_future(self.open_and_keep(self.connection)),
                 asyncio.ensure_future(self.listen(self.connection))
             ]
                 
-        loop.run_until_complete(asyncio.wait(tasks))
+        self.loop.run_until_complete(asyncio.wait(tasks))
