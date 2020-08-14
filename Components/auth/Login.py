@@ -33,8 +33,10 @@ class Login():
     def on_closed(self):
         self.isOpened = False
         self.window.destroy()
-        self.window = None
         self.logger.info(msg="Closing Auth Window")
+        time.sleep(2)
+        self.window = None
+
 
 
 

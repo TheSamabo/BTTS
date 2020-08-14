@@ -41,7 +41,7 @@ class twitch_api():
         # ACCESS and REFRESH tokens 
         print(response.text)
         self.tokens =  json.loads(response.text)
-        config['Tokens'] = {"AccessToken": self.tokens["access_token"],
+        config['Credentials'] = {"AccessToken": self.tokens["access_token"],
                             "RefreshToken": self.tokens["refresh_token"]
                             }
         with open('data.ini','w') as configfile:
@@ -61,26 +61,40 @@ class twitch_api():
         response = requests.request("GET", url, data=payload, headers=headers)
         self.channel = json.loads(response.text)
         
-    
+        
+        config["Credentials"]["ChannelId"] = self.channel["_id"]
+        
+        with open('data.ini', 'w') as f:
+            config.write(f)
     def getChannel(self):
         return self.channel
 
     def getTokens(self):
         return self.tokens
 
-def checkTokens():
-    config.read('data.ini')
-    rt = config["Tokens"]["RefreshToken"]
+def checkData(update=False):
+         
+        config.read('data.ini')
+        if config.has_section("Credentials") and update:
+            print(config)
+            rt = config["Credentials"]["RefreshToken"]
 
-    url = "https://id.twitch.tv/oauth2/token"
+            url = "https://id.twitch.tv/oauth2/token"
 
-    payload = "refresh_token=" + rt + "&client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=refresh_token&scope=" + scope 
-    headers = {
-        'content-type': "application/x-www-form-urlencoded"}
+            payload = "refresh_token=" + rt + "&client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=refresh_token&scope=" + scope 
+            headers = {
+                'content-type': "application/x-www-form-urlencoded"}
 
-    response = requests.request("POST", url, data=payload, headers=headers)
-    return json.loads(response.text)
-    
+            response = requests.request("POST", url, data=payload, headers=headers)
+            config["Credentials"]["AccessToken"] = json.loads(response.text)["access_token"]
+            return config["Credentials"]
+        elif not config.has_section("Credentials"):
+            return None
+        else:
+
+            # Returns Section with Tokens
+            return config["Credentials"]
+        
 
 
 
